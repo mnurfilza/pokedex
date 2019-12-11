@@ -1,11 +1,29 @@
 import React,{useState,useEffect} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
+
 function App() {
 
-  const[poke, setPoke] = useState([])
+  
+  return (
+    <div className="App">
+      <MainBody/>
+    </div>
+  );
+}
 
+
+//for main body
+function MainBody() {
+  const[poke, setPoke] = useState([])
   useEffect(()=>{
     axios.get('https://pokeapi.co/api/v2/pokemon')
     .then(res => {
@@ -13,20 +31,16 @@ function App() {
     //  console.log(res.data.results);
     })
   })
-
-  return (
-    <div className="App">
-    <p>lol</p>
+  return(
     <ul>
     {poke.map(item => (
-      <li key={item.name}>
-        <a href={item.url}>{item.name}</a>
-      </li>
+      <p key={item.name}>
+        {item.name}
+      </p>
 
     ))}
     </ul>
-    </div>
-  );
+  )
 }
 
 export default App;
