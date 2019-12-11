@@ -9,10 +9,12 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
+import Detail from './Detail.js'
+import { Container, Row, Col } from 'reactstrap';
+
+
 
 function App() {
-
-  
   return (
     <div className="App">
       <MainBody/>
@@ -22,25 +24,29 @@ function App() {
 
 
 //for main body
-function MainBody() {
+const MainBody = () => {
   const[poke, setPoke] = useState([])
   useEffect(()=>{
     axios.get('https://pokeapi.co/api/v2/pokemon')
     .then(res => {
       setPoke(res.data.results)
-    //  console.log(res.data.results);
-    })
-  })
-  return(
-    <ul>
-    {poke.map(item => (
-      <p key={item.name}>
-        {item.name}
-      </p>
 
-    ))}
-    </ul>
+    })
+  }, [])
+
+  return(
+    <div className="MainBody">
+      {poke.map(item => (
+        <div key={item.name} className="card">
+          <p>{item.name}</p>
+          <Detail url={item.url}></Detail>
+        </div>
+
+      ))}
+    </div>
   )
 }
+
+
 
 export default App;
